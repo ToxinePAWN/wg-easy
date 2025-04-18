@@ -3,18 +3,12 @@ volumes:
 
 services:
   wg-easy:
-    #environment:
-    #  Optional:
-    #  - PORT=51821
-    #  - HOST=0.0.0.0
-    #  - INSECURE=false
-
     image: ghcr.io/wg-easy/wg-easy:14
     container_name: wg-easy
     networks:
       wg:
-        ipv4_address: 10.42.42.42
-        ipv6_address: fdcc:ad94:bacf:61a3::2a
+        ipv4_address: 172.31.0.10
+        ipv6_address: fdcc:ad94:bacf:99a9::10
     volumes:
       - etc_wireguard:/etc/wireguard
       - /lib/modules:/lib/modules:ro
@@ -25,7 +19,6 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
-      # - NET_RAW # ⚠️ Uncomment if using Podman Compose
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
@@ -40,5 +33,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.42.42.0/24
-        - subnet: fdcc:ad94:bacf:61a3::/64
+        - subnet: 172.31.0.0/24
+        - subnet: fdcc:ad94:bacf:99a9::/64
